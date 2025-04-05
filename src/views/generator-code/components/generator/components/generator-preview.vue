@@ -1,9 +1,40 @@
-<script lang="ts" setup>
-import { NCollapse, NCollapseItem, NInput } from 'naive-ui';
+<script lang="tsx" setup>
+import { NButton, NCollapse, NCollapseItem, NInput, useDialog, useMessage } from 'naive-ui';
+import { ref } from 'vue';
 
 import { useVmsStore } from '@/store/modules/vms';
+import { downloadTextAsFile } from '@/utils/file';
 
+const dialog = useDialog();
+const message = useMessage();
 const vmsStore = useVmsStore();
+
+const download = (code: string, filename: string) => {
+  const extension = filename.includes('web') ? 'ts' : 'java';
+  filename = `${filename.split('/')[1]}.${extension}`;
+
+  let inputValue = ref(filename);
+
+  dialog.info({
+    title: '修改文件名',
+    positiveText: '下载',
+    negativeText: '取消',
+    content: () => (
+      <NInput
+        placeholder="Tiny Input"
+        clearable
+        value={inputValue.value}
+        onInput={(value) => (inputValue.value = value)}
+      />
+    ),
+    onPositiveClick: () => {
+      downloadTextAsFile(code, inputValue.value);
+    },
+    onNegativeClick: () => {
+      message.info('取消下载');
+    },
+  });
+};
 </script>
 
 <template>
@@ -14,6 +45,9 @@ const vmsStore = useVmsStore();
       :name="item.path"
       :title="item.path"
     >
+      <template #header-extra>
+        <n-button quaternary type="info" @click="download(item.code, item.path)">下载</n-button>
+      </template>
       <n-input
         :autosize="{ minRows: 3 }"
         :placeholder="item.comment"

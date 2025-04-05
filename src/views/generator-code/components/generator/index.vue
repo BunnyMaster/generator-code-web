@@ -8,6 +8,15 @@
         <n-button attr-type="button" type="warning" @click="selectAllInvert">全部反选</n-button>
         <n-button attr-type="button" type="error" @click="selectCancelAll">全选取消</n-button>
         <n-button attr-type="button" type="info" @click="onSubmit">开始生成</n-button>
+        <n-button
+          :disabled="!(vmsStore.generators.length > 0 && formValue.path.length > 0)"
+          attr-type="button"
+          type="info"
+          @click="downloadAll"
+        >
+          {{ formValue.path.length }}
+          下载全部
+        </n-button>
       </n-button-group>
     </n-form-item>
   </n-form>
@@ -16,13 +25,14 @@
   <generator-preview />
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { NButton, NButtonGroup, NForm, NFormItem, useMessage } from 'naive-ui';
 import { onMounted, ref } from 'vue';
 import { toRaw } from 'vue-demi';
 import { useRoute } from 'vue-router';
 
 import { useVmsStore } from '@/store/modules/vms';
+import { downloadTextAsFile } from '@/utils/file';
 import GeneratorForm from '@/views/generator-code/components/generator/components/generator-form.vue';
 import GeneratorPreview from '@/views/generator-code/components/generator/components/generator-preview.vue';
 import {
@@ -68,6 +78,19 @@ const onSubmit = (e: MouseEvent) => {
         });
       });
     }
+  });
+};
+
+/* 下载全部 */
+const downloadAll = () => {
+  vmsStore.generators.forEach((vms) => {
+    const code = vms.code;
+    const path = vms.path;
+
+    const extension = path.includes('web') ? 'ts' : 'java';
+    let filename = `${path.split('/')[1]}.${extension}`;
+
+    downloadTextAsFile(code, filename);
   });
 };
 

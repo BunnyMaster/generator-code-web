@@ -55,4 +55,5 @@ export const selectAllInvert = () => {
 export const selectCancelAll = () => {
   formOption.generatorServer = [];
   formOption.generatorWeb = [];
+  formValue.path = [];
 };
