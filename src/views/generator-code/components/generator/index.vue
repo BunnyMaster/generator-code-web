@@ -1,6 +1,6 @@
 <template>
   <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
-    <op-form />
+    <generator-form />
 
     <n-form-item>
       <n-button-group>
@@ -13,7 +13,7 @@
   </n-form>
 
   <!-- 生成好的数据 -->
-  <preview />
+  <generator-preview />
 </template>
 
 <script lang="ts" setup>
@@ -23,19 +23,15 @@ import { toRaw } from 'vue-demi';
 import { useRoute } from 'vue-router';
 
 import { useVmsStore } from '@/store/modules/vms';
-import OpForm from '@/views/generator-code/components/generator-form/components/op-form.vue';
-import Preview from '@/views/generator-code/components/generator-form/components/preview.vue';
+import GeneratorForm from '@/views/generator-code/components/generator/components/generator-form.vue';
+import GeneratorPreview from '@/views/generator-code/components/generator/components/generator-preview.vue';
 import {
   formValueInit,
   selectAll,
   selectAllInvert,
   selectCancelAll,
-} from '@/views/generator-code/components/generator-form/hook';
-import {
-  formOption,
-  formValue,
-  rules,
-} from '@/views/generator-code/components/generator-form/option';
+} from '@/views/generator-code/components/generator/hook';
+import { formOption, formValue, rules } from '@/views/generator-code/components/generator/option';
 
 const route = useRoute();
 const vmsStore = useVmsStore();

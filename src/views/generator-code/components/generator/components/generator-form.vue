@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { NCheckbox, NCheckboxGroup, NFormItemGi, NGrid, NInput, NSpace } from 'naive-ui';
 
-import SelectButtonGroup from '@/views/generator-code/components/generator-form/components/select-button-group.vue';
+import SelectButtonGroup from '@/views/generator-code/components/generator/components/select-button-group.vue';
 import {
   formOption,
   formValue,
   serverOptions,
   webOptions,
-} from '@/views/generator-code/components/generator-form/option';
+} from '@/views/generator-code/components/generator/option';
 </script>
 
 <template>

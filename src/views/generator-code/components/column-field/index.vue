@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useTableStore } from '@/store/modules/table';
-import { columns } from '@/views/generator-code/components/columns-info/columns';
+import { columns } from '@/views/generator-code/components/column-field/columns';
 
 const route = useRoute();
 const tableStore = useTableStore();

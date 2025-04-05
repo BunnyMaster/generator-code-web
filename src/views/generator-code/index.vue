@@ -4,8 +4,8 @@ import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { useTableStore } from '@/store/modules/table';
-import Index from '@/views/generator-code/components/columns-info/index.vue';
-import GeneratorForm from '@/views/generator-code/components/generator-form/index.vue';
+import Index from '@/views/generator-code/components/column-field/index.vue';
+import GeneratorForm from '@/views/generator-code/components/generator/index.vue';
 
 const router = useRouter();
 const route = useRoute();

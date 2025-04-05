@@ -1,6 +1,6 @@
 import type { FormRules } from 'naive-ui';
 
-import { formOption, formValue } from '@/views/generator-code/components/generator-form/hook';
+import { formOption, formValue } from '@/views/generator-code/components/generator/hook';
 
 /* 验证生成前后端内容是否合法 */
 const validatorFormOption = () => {

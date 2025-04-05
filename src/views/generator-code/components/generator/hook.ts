@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 
-import { serverOptions, webOptions } from '@/views/generator-code/components/generator-form/option';
+import { serverOptions, webOptions } from '@/views/generator-code/components/generator/option';
 
 export const formOption = reactive({
   generatorServer: [],
