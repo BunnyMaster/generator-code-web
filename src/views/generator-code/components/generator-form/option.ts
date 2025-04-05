@@ -1,5 +1,13 @@
 import type { FormRules } from 'naive-ui';
 
+import { formOption, formValue } from '@/views/generator-code/components/generator-form/hook';
+
+/* 验证生成前后端内容是否合法 */
+const validatorFormOption = () => {
+  return formOption.generatorServer.length > 0 || formOption.generatorWeb.length > 0;
+};
+
+// 生成服务端内容
 export const serverOptions = [
   { name: 'controller', label: 'controller' },
   { name: 'mapper', label: 'mapper' },
@@ -8,6 +16,7 @@ export const serverOptions = [
   { name: 'serviceImpl', label: 'serviceImpl' },
 ];
 
+// 生成前端内容
 export const webOptions = [
   { name: 'api', label: 'api' },
   { name: 'columns', label: 'columns' },
@@ -15,9 +24,10 @@ export const webOptions = [
   { name: 'hook', label: 'hook' },
   { name: 'index', label: 'index' },
   { name: 'store', label: 'store' },
-  { name: 'labels', label: 'labels' },
+  { name: 'types', label: 'types' },
 ];
 
+// 表单验证
 export const rules: FormRules = {
   author: { required: true, trigger: ['blur', 'change', 'input'], message: '作者不能为空' },
   packageName: { required: true, trigger: ['blur', 'change', 'input'], message: '包名不能为空' },
@@ -33,10 +43,22 @@ export const rules: FormRules = {
     trigger: ['blur', 'change', 'input'],
     message: '日期格式不能为空',
   },
-  // generatorServer: {
-  //   required: true,
-  //   trigger: ['blur', 'change', 'input'],
-  //   message: '选择要生成的服务端',
-  // },
-  // generatorWeb: { required: true, trigger: ['blur', 'change', 'input'], message: '选择要生成的前端' },
+  generatorServer: [
+    {
+      required: true,
+      trigger: ['blur', 'change', 'input'],
+      message: '选择要生成的服务端',
+      validator: validatorFormOption,
+    },
+  ],
+  generatorWeb: [
+    {
+      required: true,
+      trigger: ['blur', 'change', 'input'],
+      message: '选择要生成的前端',
+      validator: validatorFormOption,
+    },
+  ],
 };
+
+export { formOption, formValue };
