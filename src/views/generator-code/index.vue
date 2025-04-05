@@ -6,7 +6,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { useTableStore } from '@/store/modules/table';
 import Index from '@/views/generator-code/components/columns-info/index.vue';
 import GeneratorForm from '@/views/generator-code/components/generator-form/index.vue';
-import Home from '@/views/home/index.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -35,6 +34,7 @@ onMounted(() => {
   <n-card>
     <template #header>
       <n-card title="数据库信息">
+        <span class="color-blue" @click="router.push('/')">回到首页</span>
         <ul>
           <li>表名：{{ route.query.tableName }}</li>
           <li>表注释：{{ tableInfo.comment }}</li>
@@ -47,11 +47,6 @@ onMounted(() => {
     <n-tabs animated type="line">
       <n-tab-pane name="columns-info" tab="列字段">
         <index />
-      </n-tab-pane>
-
-      <n-tab-pane name="home" tab="数据库表" @click="router.push('/')">
-        <a class="inline-block color-blue" href="/">回到首页</a>
-        <home />
       </n-tab-pane>
 
       <n-tab-pane name="the beatles" tab="生成">
