@@ -4,8 +4,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { presetIcons } from 'unocss';
 import UnoCSS from 'unocss/vite';
 import type { PluginOption } from 'vite';
-// @ts-ignore
-import { vitePluginFakeServer } from 'vite-plugin-fake-server';
 import removeConsole from 'vite-plugin-remove-console';
 import Inspector from 'vite-plugin-vue-inspector';
 
@@ -43,20 +41,6 @@ export const plugins = (mode: string): PluginOption[] => {
       ],
     }),
     compressPack(mode),
-    useMock(mode),
   ];
 };
 
-/** MOCK 服务 */
-const useMock = (mode: string) => {
-  const { VITE_MOCK_DEV_SERVER } = wrapperEnv(mode);
-
-  return VITE_MOCK_DEV_SERVER
-    ? vitePluginFakeServer({
-        logger: true,
-        include: 'mock',
-        infixName: false,
-        enableProd: true, // 线上支持mock
-      })
-    : null;
-};

@@ -7,7 +7,7 @@ export function columns(): TableColumns<any> {
   const router = useRouter();
 
   const routerPush = (row: any) => {
-    router.push({ path: '/generator-code', query: { tableName: row.tableName } }).then();
+    router.replace({ path: '/generator-code', query: { tableName: row.tableName } }).then();
   };
 
   return [
@@ -16,7 +16,7 @@ export function columns(): TableColumns<any> {
       key: 'no',
       titleAlign: 'center',
       align: 'center',
-      render(row, index): JSX.Element {
+      render(_, index: number): number {
         return index + 1;
       },
     },
@@ -25,7 +25,7 @@ export function columns(): TableColumns<any> {
       key: 'tableCat',
       titleAlign: 'center',
       align: 'center',
-      render(row): JSX.Element {
+      render(row: any): JSX.Element {
         return <NTag type="primary">{row.tableCat}</NTag>;
       },
     },
@@ -34,7 +34,7 @@ export function columns(): TableColumns<any> {
       key: 'tableType',
       titleAlign: 'center',
       align: 'center',
-      render(row): JSX.Element {
+      render(row: any): JSX.Element {
         return <NTag>{row.tableType}</NTag>;
       },
     },
@@ -43,12 +43,10 @@ export function columns(): TableColumns<any> {
       key: 'tableName',
       titleAlign: 'center',
       align: 'center',
-      render(row): JSX.Element {
+      render(row: any): JSX.Element {
         return (
-          <NTag type="info">
-            <a href="javascript:" onClick={() => routerPush(row)}>
-              {row.tableName}
-            </a>
+          <NTag type="info" onClick={() => routerPush(row)}>
+            {row.tableName}
           </NTag>
         );
       },
@@ -58,12 +56,10 @@ export function columns(): TableColumns<any> {
       key: 'comment',
       titleAlign: 'center',
       align: 'center',
-      render(row): JSX.Element {
+      render(row: any): JSX.Element {
         return (
-          <NTag type="info">
-            <a href="javascript:" onClick={() => routerPush(row)}>
-              {row.comment}
-            </a>
+          <NTag type="info" onClick={() => routerPush(row)}>
+            {row.comment}
           </NTag>
         );
       },

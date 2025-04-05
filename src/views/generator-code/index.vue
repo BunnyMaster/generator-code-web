@@ -50,7 +50,7 @@ onMounted(() => {
       </n-tab-pane>
 
       <n-tab-pane name="home" tab="数据库表" @click="router.push('/')">
-        <a class="color-blue" href="/">回到首页</a>
+        <a class="inline-block color-blue" href="/">回到首页</a>
         <home />
       </n-tab-pane>
 

@@ -52,7 +52,6 @@
     "unocss": "^66.0.0",
     "vfonts": "^0.0.3",
     "vite-plugin-cdn-import": "^1.0.1",
-    "vite-plugin-fake-server": "^2.2.0",
     "vite-plugin-remove-console": "^2.2.0",
     "vite-plugin-vue-inspector": "^5.3.1",
     "vue": "^3.5.13",
