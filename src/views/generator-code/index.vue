@@ -45,12 +45,12 @@ onMounted(() => {
     </template>
 
     <n-tabs animated type="line">
-      <n-tab-pane name="columns-info" tab="列字段">
-        <index />
+      <n-tab-pane name="generator-code" tab="生成">
+        <generator-form />
       </n-tab-pane>
 
-      <n-tab-pane name="the beatles" tab="生成">
-        <generator-form />
+      <n-tab-pane name="columns-info" tab="列字段">
+        <index />
       </n-tab-pane>
     </n-tabs>
   </n-card>

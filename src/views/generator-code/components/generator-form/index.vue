@@ -29,7 +29,7 @@
         <n-input v-model:value="formValue.tablePrefixes" placeholder="电话号码" />
       </n-form-item-gi>
       <n-form-item-gi :span="8" label="生成后端" path="generatorServer">
-        <n-checkbox-group v-model:value="formValue.generatorServer">
+        <n-checkbox-group v-model:value="formOption.generatorServer">
           <n-space>
             <n-checkbox v-for="(item, index) in serverOptions" :key="index" :value="item.name">
               {{ item.label }}
@@ -38,7 +38,7 @@
         </n-checkbox-group>
       </n-form-item-gi>
       <n-form-item-gi :span="8" label="生成前端" path="generatorWeb">
-        <n-checkbox-group v-model:value="formValue.generatorWeb">
+        <n-checkbox-group v-model:value="formOption.generatorWeb">
           <n-space>
             <n-checkbox v-for="(item, index) in webOptions" :key="index" v-model:value="item.name">
               {{ item.label }}
@@ -54,6 +54,23 @@
       </n-button>
     </n-form-item>
   </n-form>
+
+  <!-- 生成好的数据 -->
+  <n-collapse>
+    <n-collapse-item
+      v-for="(item, index) in vmsStore.generators"
+      :key="index"
+      :name="item.path"
+      :title="item.path"
+    >
+      <n-input
+        :autosize="{ minRows: 3 }"
+        :placeholder="item.comment"
+        :value="item.code"
+        type="textarea"
+      />
+    </n-collapse-item>
+  </n-collapse>
 </template>
 
 <script lang="ts" setup>
@@ -61,6 +78,8 @@ import {
   NButton,
   NCheckbox,
   NCheckboxGroup,
+  NCollapse,
+  NCollapseItem,
   NForm,
   NFormItem,
   NFormItemGi,
@@ -70,8 +89,10 @@ import {
   useMessage,
 } from 'naive-ui';
 import { onMounted, reactive, ref } from 'vue';
+import { toRaw } from 'vue-demi';
 import { useRoute } from 'vue-router';
 
+import { useVmsStore } from '@/store/modules/vms';
 import {
   rules,
   serverOptions,
@@ -79,8 +100,14 @@ import {
 } from '@/views/generator-code/components/generator-form/generatorOptions';
 
 const route = useRoute();
+const vmsStore = useVmsStore();
 const message = useMessage();
 const formRef = ref();
+
+const formOption = reactive({
+  generatorServer: [],
+  generatorWeb: [],
+});
 const formValue = reactive({
   author: 'Bunny',
   packageName: 'cn.bunny.services',
@@ -89,8 +116,7 @@ const formValue = reactive({
   tableName: '',
   simpleDateFormat: 'yyyy-MM-dd HH:mm:ss',
   tablePrefixes: 't_,sys_,qrtz_,log_',
-  generatorServer: undefined,
-  generatorWeb: undefined,
+  path: [],
 });
 
 /* 提交表单 */
@@ -98,8 +124,23 @@ const onSubmit = (e: MouseEvent) => {
   e.preventDefault();
   formRef.value?.validate(async (errors: any) => {
     if (!errors) {
-      console.log(formValue);
-      message.success('验证成功');
+      // 选择要生成的模板
+      const generatorWeb = formOption.generatorWeb;
+      const generatorServer = formOption.generatorServer;
+
+      // 整理好路径
+      const server = generatorServer.map((server: string) => `server/${server}`);
+      const web = generatorWeb.map((server: string) => `web/${server}`);
+
+      // 整理好数据
+      formValue.path = [...server, ...web];
+      if (formValue.path.length <= 0) {
+        message.error(`选择要生成的模板`);
+        return;
+      }
+
+      // 生成代码
+      await vmsStore.generator(toRaw(formValue));
     } else {
       errors.forEach((error: any) => {
         error.forEach((err: any) => {
