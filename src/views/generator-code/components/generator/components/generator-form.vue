@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import { NCheckbox, NCheckboxGroup, NFormItemGi, NGrid, NInput, NSpace } from 'naive-ui';
 
+import { useVmsStore } from '@/store/modules/vms';
 import SelectButtonGroup from '@/views/generator-code/components/generator/components/select-button-group.vue';
-import {
-  formOption,
-  formValue,
-  serverOptions,
-  webOptions,
-} from '@/views/generator-code/components/generator/option';
+import { formOption, formValue } from '@/views/generator-code/components/generator/option';
+
+const vmsStore = useVmsStore();
 </script>
 
 <template>
@@ -42,14 +40,18 @@ import {
     <n-form-item-gi :span="8" label="生成后端" path="generatorServer">
       <n-checkbox-group v-model:value="formOption.generatorServer">
         <n-space>
-          <n-checkbox v-for="(item, index) in serverOptions" :key="index" :value="item.name">
+          <n-checkbox
+            v-for="(item, index) in vmsStore.serverOptions"
+            :key="index"
+            :value="item.name"
+          >
             {{ item.label }}
           </n-checkbox>
 
           <!-- 选择按钮 -->
           <select-button-group
             v-model:selected="formOption.generatorServer"
-            :data="serverOptions"
+            :data="vmsStore.serverOptions"
             id-key="name"
           />
         </n-space>
@@ -58,14 +60,18 @@ import {
     <n-form-item-gi :span="8" label="生成前端" path="generatorWeb">
       <n-checkbox-group v-model:value="formOption.generatorWeb">
         <n-space>
-          <n-checkbox v-for="(item, index) in webOptions" :key="index" v-model:value="item.name">
+          <n-checkbox
+            v-for="(item, index) in vmsStore.webOptions"
+            :key="index"
+            v-model:value="item.name"
+          >
             {{ item.label }}
           </n-checkbox>
 
           <!-- 选择按钮 -->
           <select-button-group
             v-model:selected="formOption.generatorWeb"
-            :data="webOptions"
+            :data="vmsStore.webOptions"
             id-key="name"
           />
         </n-space>

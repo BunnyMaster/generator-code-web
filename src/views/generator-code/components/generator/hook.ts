@@ -1,6 +1,8 @@
 import { reactive } from 'vue';
 
-import { serverOptions, webOptions } from '@/views/generator-code/components/generator/option';
+import { useVmsStore } from '@/store/modules/vms';
+
+const vmsStore = useVmsStore();
 
 export const formOption = reactive({
   generatorServer: [],
@@ -32,21 +34,21 @@ export const formValueInit = (tableName: any) => {
 
 /* 全部选择 */
 export const selectAll = () => {
-  formOption.generatorServer = serverOptions.map((option: any) => option.name);
-  formOption.generatorWeb = webOptions.map((option: any) => option.name);
+  formOption.generatorServer = vmsStore.serverOptions.map((option: any) => option.name);
+  formOption.generatorWeb = vmsStore.webOptions.map((option: any) => option.name);
 };
 
 /* 全部反选 */
 export const selectAllInvert = () => {
   // 反选server
-  const serverNames: string[] = serverOptions.map((item) => item['name']);
+  const serverNames: string[] = vmsStore.serverOptions.map((item) => item['name']);
   const generatorServer = formOption.generatorServer;
   formOption.generatorServer = serverNames.filter(
     (name: string) => !generatorServer.includes(name)
   );
 
   // 反选web
-  const webNames: string[] = webOptions.map((item) => item['name']);
+  const webNames: string[] = vmsStore.webOptions.map((item) => item['name']);
   const generatorWeb = formOption.generatorWeb;
   formOption.generatorWeb = webNames.filter((name) => !generatorWeb.includes(name));
 };

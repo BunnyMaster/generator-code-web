@@ -10,10 +10,8 @@ const message = useMessage();
 const vmsStore = useVmsStore();
 
 const download = (code: string, filename: string) => {
-  const extension = filename.includes('web') ? 'ts' : 'java';
-  filename = `${filename.split('/')[1]}.${extension}`;
-
-  let inputValue = ref(filename);
+  filename = filename.split('/')[1];
+  const inputValue = ref(filename);
 
   dialog.info({
     title: '修改文件名',
@@ -24,7 +22,7 @@ const download = (code: string, filename: string) => {
         placeholder="Tiny Input"
         clearable
         value={inputValue.value}
-        onInput={(value) => (inputValue.value = value)}
+        onInput={(value: any) => (inputValue.value = value)}
       />
     ),
     onPositiveClick: () => {
