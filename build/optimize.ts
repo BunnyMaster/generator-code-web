@@ -11,4 +11,4 @@ const include = ['vue', 'vue-router', 'dayjs', 'axios', 'pinia', 'vue-types', 'j
  */
 const exclude: string[] = [];
 
-export { include, exclude };
+export { exclude, include };

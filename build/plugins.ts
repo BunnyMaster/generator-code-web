@@ -9,7 +9,7 @@ import Inspector from 'vite-plugin-vue-inspector';
 
 import { useCDN } from './cdn';
 import { viteConsoleLog } from './info';
-import { compressPack, report, wrapperEnv } from './utils';
+import { compressPack, report } from './utils';
 
 export const plugins = (mode: string): PluginOption[] => {
   return [
@@ -43,4 +43,3 @@ export const plugins = (mode: string): PluginOption[] => {
     compressPack(mode),
   ];
 };
-
