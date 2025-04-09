@@ -10,3 +10,13 @@ export const generator = (data: any) => {
 export const getVmsPathList = () => {
   return request<any, BaseResult<any>>({ url: '/vms/getVmsPathList', method: 'get' });
 };
+
+/* 打包成zip下载 */
+export const downloadByZip = (data: any) => {
+  return request<any, any>({
+    url: '/vms/downloadByZip',
+    method: 'POST',
+    data,
+    responseType: 'blob',
+  });
+};

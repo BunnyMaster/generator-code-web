@@ -5,6 +5,7 @@ import { generator, getVmsPathList } from '@/api/vms';
 export const useVmsStore = defineStore('vmsStore', {
   state: () => ({
     generators: [],
+
     // 生成服务端内容
     serverOptions: [],
 
@@ -36,6 +37,11 @@ export const useVmsStore = defineStore('vmsStore', {
 
       this.webOptions = result.data.web;
       this.serverOptions = result.data.server;
+    },
+
+    /* 晴空已生成 */
+    clearGenerators() {
+      this.generators = [];
     },
   },
 });

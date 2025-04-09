@@ -37,6 +37,7 @@ const vmsStore = useVmsStore();
     <n-form-item-gi :span="8" label="去除开头前缀" path="tablePrefixes">
       <n-input v-model:value="formValue.tablePrefixes" placeholder="电话号码" />
     </n-form-item-gi>
+
     <n-form-item-gi :span="8" label="生成后端" path="generatorServer">
       <n-checkbox-group v-model:value="formOption.generatorServer">
         <n-space>
@@ -57,6 +58,7 @@ const vmsStore = useVmsStore();
         </n-space>
       </n-checkbox-group>
     </n-form-item-gi>
+
     <n-form-item-gi :span="8" label="生成前端" path="generatorWeb">
       <n-checkbox-group v-model:value="formOption.generatorWeb">
         <n-space>

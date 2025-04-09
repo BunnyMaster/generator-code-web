@@ -59,3 +59,17 @@ export const selectCancelAll = () => {
   formOption.generatorWeb = [];
   formValue.path = [];
 };
+
+/* 验证 formValue.path 是否为空  */
+export const validateFormValue = () => {
+  // 选择要生成的模板
+  const web = formOption.generatorWeb;
+  const server = formOption.generatorServer;
+
+  // 整理好数据
+  formValue.path = [...server, ...web];
+  if (formValue.path.length <= 0) {
+    message.error(`选择要生成的模板`);
+    return;
+  }
+};
