@@ -26,6 +26,7 @@ const download = (code: string, filename: string) => {
       />
     ),
     onPositiveClick: () => {
+      // 下载文件
       downloadTextAsFile(code, inputValue.value);
     },
     onNegativeClick: () => {

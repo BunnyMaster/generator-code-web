@@ -43,22 +43,18 @@ service.interceptors.response.use(
       return response.data;
     }
 
-    // ElMessage.error(msg || '系统出错');
+    // 系统出错
     return Promise.reject(response.data.message || 'Error');
   },
   (error: any) => {
     // 异常处理
     if (error.response.data) {
-      // const { code, msg } = error.response.data;
-      // if (code === ResultEnum.TOKEN_INVALID) {
-      // ElNotification({
-      //   title: '提示',
-      //   message: '您的会话已过期，请重新登录',
-      //   type: 'info',
-      // });
-      // } else {
-      // ElMessage.error(msg || '系统出错');
-      // }
+      const { code, message } = error.response.data;
+      if (code === 500) {
+        (window as any).$message.error(message);
+      } else {
+        (window as any).$message.error(message || '系统出错');
+      }
     }
     return Promise.reject(error.message);
   }

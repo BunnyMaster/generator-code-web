@@ -13,9 +13,13 @@ const tableStore = useTableStore();
 
 // 数据库表信息
 const tableInfo = reactive({
+  /* 表名称 */
   tableName: '',
+  /* 注释内容 */
   comment: '',
+  /* 数据库内容 */
   tableCat: '',
+  /* 通常是 "TABLE" */
   tableType: '',
 });
 

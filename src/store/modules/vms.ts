@@ -7,6 +7,7 @@ export const useVmsStore = defineStore('vmsStore', {
     generators: [],
     // 生成服务端内容
     serverOptions: [],
+
     // 生成前端内容
     webOptions: [],
   }),

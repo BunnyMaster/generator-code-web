@@ -26,5 +26,3 @@ onMounted(() => {
 <template>
   <n-data-table :bordered="true" :columns="columns" :data="datalist" />
 </template>
-
-<style scoped></style>

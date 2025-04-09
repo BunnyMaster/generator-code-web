@@ -1,9 +1,14 @@
 import request from '@/api/server/request';
 import type { BaseResult } from '@/types/request';
 
-/* 获取所有数据表 */
-export const getAllTableMetaData = () => {
-  return request<any, BaseResult<any>>({ url: '/table/getAllTableMetaData', method: 'get' });
+/* 所有的数据库 */
+export const getDbList = () => {
+  return request<any, any>({ url: '/table/getDbList', method: 'GET' });
+};
+
+/* 数据库所有的表 */
+export const getDbTables = (params: any) => {
+  return request<any, BaseResult<any>>({ url: '/table/getDbTables', method: 'get', params });
 };
 
 /* 获取表属性 */
