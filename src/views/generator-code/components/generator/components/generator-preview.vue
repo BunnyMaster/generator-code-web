@@ -37,6 +37,7 @@ const download = (code: string, filename: string) => {
 </script>
 
 <template>
+  <!-- 生成好之后下面的预览文件 -->
   <n-collapse>
     <n-collapse-item
       v-for="(item, index) in vmsStore.generators"

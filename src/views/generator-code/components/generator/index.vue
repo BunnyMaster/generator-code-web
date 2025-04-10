@@ -1,3 +1,82 @@
+<script lang="tsx" setup>
+import { NButton, NForm, NFormItem, NGi, NGrid, useMessage } from 'naive-ui';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
+import { computed } from 'vue-demi';
+import { useRoute } from 'vue-router';
+
+import { downloadByZip } from '@/api/vms';
+import { useVmsStore } from '@/store/modules/vms';
+import { downloadBlob, downloadTextAsFile } from '@/utils/file';
+import GeneratorForm from '@/views/generator-code/components/generator/components/generator-form.vue';
+import GeneratorPreview from '@/views/generator-code/components/generator/components/generator-preview.vue';
+import {
+  formValueInit,
+  selectAll,
+  selectAllInvert,
+  selectCancelAll,
+  validateFormValue,
+} from '@/views/generator-code/components/generator/hook';
+import { rules } from '@/views/generator-code/components/generator/option';
+
+const route = useRoute();
+
+const vmsStore = useVmsStore();
+const { formValue, formOption } = storeToRefs(vmsStore);
+
+const message = useMessage();
+const formRef = ref();
+const hasDownloadZip = computed(
+  () => !(formOption.value.generatorWeb.length > 0 || formOption.value.generatorServer.length > 0)
+);
+
+/* 提交表单 */
+const onSubmit = (e: MouseEvent) => {
+  e.preventDefault();
+
+  formRef.value?.validate(async (errors: any) => {
+    if (!errors) {
+      validateFormValue();
+
+      // 生成代码
+      await vmsStore.generator(formValue.value);
+    } else {
+      errors.forEach((error: any) => {
+        error.forEach((err: any) => {
+          message.error(`${err.message}->${err.field}`);
+        });
+      });
+    }
+  });
+};
+
+/* 下载全部 */
+const downloadAll = () => {
+  vmsStore.generators.forEach((vms) => {
+    const code = vms.code;
+    const path = vms.path.split('/')[1];
+
+    downloadTextAsFile(code, path);
+  });
+};
+
+/* 下载zip文件 */
+const downloadZipFile = async () => {
+  validateFormValue();
+
+  const result = await downloadByZip(formValue.value);
+  downloadBlob(result);
+};
+
+onMounted(() => {
+  // 初始化表名称
+  const tableName: any = route.query.tableName;
+  formValueInit(tableName);
+
+  vmsStore.getVmsPathList();
+});
+</script>
+
 <template>
   <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
     <generator-form />
@@ -43,78 +122,3 @@
   <!-- 生成好的数据 -->
   <generator-preview />
 </template>
-
-<script lang="tsx" setup>
-import { NButton, NForm, NFormItem, NGi, NGrid, useMessage } from 'naive-ui';
-import { onMounted, ref } from 'vue';
-import { computed, toRaw } from 'vue-demi';
-import { useRoute } from 'vue-router';
-
-import { downloadByZip } from '@/api/vms';
-import { useVmsStore } from '@/store/modules/vms';
-import { downloadBlob, downloadTextAsFile } from '@/utils/file';
-import GeneratorForm from '@/views/generator-code/components/generator/components/generator-form.vue';
-import GeneratorPreview from '@/views/generator-code/components/generator/components/generator-preview.vue';
-import {
-  formValueInit,
-  selectAll,
-  selectAllInvert,
-  selectCancelAll,
-  validateFormValue,
-} from '@/views/generator-code/components/generator/hook';
-import { formOption, formValue, rules } from '@/views/generator-code/components/generator/option';
-
-const route = useRoute();
-const vmsStore = useVmsStore();
-const message = useMessage();
-const formRef = ref();
-const hasDownloadZip = computed(
-  () => !(formOption.generatorWeb.length > 0 || formOption.generatorServer.length > 0)
-);
-
-/* 提交表单 */
-const onSubmit = (e: MouseEvent) => {
-  e.preventDefault();
-
-  formRef.value?.validate(async (errors: any) => {
-    if (!errors) {
-      validateFormValue();
-
-      // 生成代码
-      await vmsStore.generator(toRaw(formValue));
-    } else {
-      errors.forEach((error: any) => {
-        error.forEach((err: any) => {
-          message.error(`${err.message}->${err.field}`);
-        });
-      });
-    }
-  });
-};
-
-/* 下载全部 */
-const downloadAll = () => {
-  vmsStore.generators.forEach((vms) => {
-    const code = vms.code;
-    const path = vms.path.split('/')[1];
-
-    downloadTextAsFile(code, path);
-  });
-};
-
-/* 下载zip文件 */
-const downloadZipFile = async () => {
-  validateFormValue();
-
-  const result = await downloadByZip(toRaw(formValue));
-  downloadBlob(result);
-};
-
-onMounted(() => {
-  // 初始化表名称
-  const tableName: any = route.query.tableName;
-  formValueInit(tableName);
-
-  vmsStore.getVmsPathList();
-});
-</script>

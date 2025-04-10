@@ -6,6 +6,7 @@ export const useTableStore = defineStore('tableStore', {
   state: () => ({
     // 数据库所有的表
     tableList: [],
+    tableListLoading: false,
     // 数据列表
     dbList: [],
   }),
@@ -13,10 +14,13 @@ export const useTableStore = defineStore('tableStore', {
   actions: {
     /* 所有的数据库 */
     async getDbList() {
+      this.tableListLoading = true;
       const result = await getDbList();
 
       if (result.code !== 200) {
         (window as any).$message.error(result.message);
+        this.tableListLoading = false;
+        return;
       }
 
       // 整理返回数据格式
@@ -30,6 +34,7 @@ export const useTableStore = defineStore('tableStore', {
       list.unshift({ label: '无', value: undefined, comment: '查询全部' });
 
       this.dbList = list;
+      this.tableListLoading = false;
     },
 
     /* 数据库所有的表 */

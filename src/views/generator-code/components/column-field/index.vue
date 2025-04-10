@@ -24,5 +24,6 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- 当前表的列字段 -->
   <n-data-table :bordered="true" :columns="columns" :data="datalist" />
 </template>

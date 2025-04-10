@@ -1,10 +1,14 @@
 import type { FormRules } from 'naive-ui';
+import { storeToRefs } from 'pinia';
 
-import { formOption, formValue } from '@/views/generator-code/components/generator/hook';
+import { useVmsStore } from '@/store/modules/vms';
+
+const vmsStore = useVmsStore();
+const { formOption } = storeToRefs(vmsStore);
 
 /* 验证生成前后端内容是否合法 */
 const validatorFormOption = () => {
-  return formOption.generatorServer.length > 0 || formOption.generatorWeb.length > 0;
+  return formOption.value.generatorServer.length > 0 || formOption.value.generatorWeb.length > 0;
 };
 
 // 表单验证
@@ -40,5 +44,3 @@ export const rules: FormRules = {
     },
   ],
 };
-
-export { formOption, formValue };

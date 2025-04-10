@@ -55,5 +55,10 @@ onMounted(() => {
     />
   </n-card>
 
-  <n-data-table :bordered="true" :columns="columns()" :data="tableStore.tableList" />
+  <n-data-table
+    :bordered="true"
+    :columns="columns()"
+    :data="tableStore.tableList"
+    :loading="tableStore.tableListLoading"
+  />
 </template>

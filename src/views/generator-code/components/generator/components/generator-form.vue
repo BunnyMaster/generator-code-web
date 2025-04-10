@@ -1,35 +1,37 @@
 <script lang="ts" setup>
 import { NCheckbox, NCheckboxGroup, NFormItemGi, NGrid, NInput, NSpace } from 'naive-ui';
+import { storeToRefs } from 'pinia';
 
 import { useVmsStore } from '@/store/modules/vms';
 import SelectButtonGroup from '@/views/generator-code/components/generator/components/select-button-group.vue';
-import { formOption, formValue } from '@/views/generator-code/components/generator/option';
 
 const vmsStore = useVmsStore();
+const { formValue, formOption } = storeToRefs(vmsStore);
 </script>
 
 <template>
+  <!-- 需要提交的生成表单 -->
   <n-grid :cols="24" :x-gap="24">
     <n-form-item-gi :span="8" label="作者名称" path="author">
-      <n-input v-model:value="formValue.author" placeholder="输入姓名" />
+      <n-input v-model:value="formValue.author" placeholder="作者名称" />
     </n-form-item-gi>
     <n-form-item-gi :span="8" label="requestMapping名称" path="requestMapping">
-      <n-input v-model:value="formValue.requestMapping" placeholder="输入年龄" />
+      <n-input v-model:value="formValue.requestMapping" placeholder="requestMapping名称" />
     </n-form-item-gi>
     <n-form-item-gi :span="8" label="表名称" path="tableName">
-      <n-input v-model:value="formValue.tableName" placeholder="电话号码" />
+      <n-input v-model:value="formValue.tableName" placeholder="表名称" />
     </n-form-item-gi>
   </n-grid>
 
   <n-grid :cols="24" :x-gap="24">
     <n-form-item-gi :span="8" label="类名称" path="className">
-      <n-input v-model:value="formValue.className" placeholder="电话号码" />
+      <n-input v-model:value="formValue.className" placeholder="类名称" />
     </n-form-item-gi>
     <n-form-item-gi :span="8" label="包名称" path="packageName">
-      <n-input v-model:value="formValue.packageName" placeholder="电话号码" />
+      <n-input v-model:value="formValue.packageName" placeholder="包名称" />
     </n-form-item-gi>
     <n-form-item-gi :span="8" label="时间格式" path="simpleDateFormat">
-      <n-input v-model:value="formValue.simpleDateFormat" placeholder="电话号码" />
+      <n-input v-model:value="formValue.simpleDateFormat" placeholder="时间格式" />
     </n-form-item-gi>
   </n-grid>
 

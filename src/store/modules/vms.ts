@@ -2,7 +2,32 @@ import { defineStore } from 'pinia';
 
 import { generator, getVmsPathList } from '@/api/vms';
 
+interface VmsStore {
+  generators: any;
+  serverOptions: string[];
+  webOptions: string[];
+  formValue: {
+    author: string;
+    packageName: string;
+    requestMapping: string;
+    className: string;
+    tableName: string;
+    simpleDateFormat: string;
+    tablePrefixes: string;
+    path: string[];
+  };
+  formOption: {
+    generatorServer: string[];
+    generatorWeb: string[];
+  };
+}
+
 export const useVmsStore = defineStore('vmsStore', {
+  // 开启持久化
+  // persist: true,
+  persist: {
+    paths: ['formValue', 'formOption'],
+  },
   state: () => ({
     generators: [],
 
@@ -11,6 +36,24 @@ export const useVmsStore = defineStore('vmsStore', {
 
     // 生成前端内容
     webOptions: [],
+
+    // 查询的表单
+    formValue: {
+      author: 'Bunny',
+      packageName: 'cn.bunny.services',
+      requestMapping: '/api',
+      className: '',
+      tableName: '',
+      simpleDateFormat: 'yyyy-MM-dd HH:mm:ss',
+      tablePrefixes: 't_,sys_,qrtz_,log_',
+      path: [],
+    },
+
+    // 表单选择内容
+    formOption: {
+      generatorServer: [],
+      generatorWeb: [],
+    },
   }),
   getters: {},
   actions: {
@@ -22,7 +65,7 @@ export const useVmsStore = defineStore('vmsStore', {
         (window as any).$message.error(result.message);
       }
 
-      this.generators = result.data.map((i) => ({ ...i, path: i.path.replace('.vm', '') }));
+      this.generators = result.data.map((i: any) => ({ ...i, path: i.path.replace('.vm', '') }));
       (window as any).$message.success(`生成成功，共 ${this.generators.length} 数据`);
     },
 
