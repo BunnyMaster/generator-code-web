@@ -38,7 +38,7 @@ onMounted(() => {
   <n-card>
     <template #header>
       <n-card title="数据库信息">
-        <span class="color-blue" @click="router.push('/')">回到首页</span>
+        <span class="color-blue cursor-pointer" @click="router.push('/')">回到首页</span>
         <ul>
           <li>表名：{{ route.query.tableName }}</li>
           <li>表注释：{{ tableInfo.comment }}</li>
