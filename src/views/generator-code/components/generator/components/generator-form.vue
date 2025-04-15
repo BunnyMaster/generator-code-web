@@ -37,10 +37,16 @@ const { formValue, formOption } = storeToRefs(vmsStore);
 
   <n-grid :cols="24" :x-gap="24">
     <n-form-item-gi :span="8" label="去除开头前缀" path="tablePrefixes">
-      <n-input v-model:value="formValue.tablePrefixes" placeholder="电话号码" />
+      <n-input v-model:value="formValue.tablePrefixes" placeholder="去除开头前缀" />
     </n-form-item-gi>
 
-    <n-form-item-gi :span="8" label="生成后端" path="generatorServer">
+    <n-form-item-gi :span="8" label="修改注释名称" path="comment">
+      <n-input v-model:value="formValue.comment" placeholder="修改注释名称" />
+    </n-form-item-gi>
+  </n-grid>
+
+  <n-grid :cols="24" :x-gap="24">
+    <n-form-item-gi :span="12" label="生成后端" path="generatorServer">
       <n-checkbox-group v-model:value="formOption.generatorServer">
         <n-space>
           <n-checkbox
@@ -61,7 +67,7 @@ const { formValue, formOption } = storeToRefs(vmsStore);
       </n-checkbox-group>
     </n-form-item-gi>
 
-    <n-form-item-gi :span="8" label="生成前端" path="generatorWeb">
+    <n-form-item-gi :span="12" label="生成前端" path="generatorWeb">
       <n-checkbox-group v-model:value="formOption.generatorWeb">
         <n-space>
           <n-checkbox

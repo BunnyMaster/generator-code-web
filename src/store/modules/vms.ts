@@ -2,32 +2,12 @@ import { defineStore } from 'pinia';
 
 import { generator, getVmsPathList } from '@/api/vms';
 
-interface VmsStore {
-  generators: any;
-  serverOptions: string[];
-  webOptions: string[];
-  formValue: {
-    author: string;
-    packageName: string;
-    requestMapping: string;
-    className: string;
-    tableName: string;
-    simpleDateFormat: string;
-    tablePrefixes: string;
-    path: string[];
-  };
-  formOption: {
-    generatorServer: string[];
-    generatorWeb: string[];
-  };
-}
-
 export const useVmsStore = defineStore('vmsStore', {
   // 开启持久化
   // persist: true,
-  persist: {
-    paths: ['formValue', 'formOption'],
-  },
+  // persist: {
+  //   paths: ['formValue', 'formOption'],
+  // },
   state: () => ({
     generators: [],
 
@@ -46,6 +26,7 @@ export const useVmsStore = defineStore('vmsStore', {
       tableName: '',
       simpleDateFormat: 'yyyy-MM-dd HH:mm:ss',
       tablePrefixes: 't_,sys_,qrtz_,log_',
+      comment: '',
       path: [],
     },
 

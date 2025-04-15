@@ -1,15 +1,19 @@
 <script lang="ts" setup>
 import { NCard, NTabPane, NTabs } from 'naive-ui';
+import { storeToRefs } from 'pinia';
 import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { useTableStore } from '@/store/modules/table';
+import { useVmsStore } from '@/store/modules/vms';
 import Index from '@/views/generator-code/components/column-field/index.vue';
 import GeneratorForm from '@/views/generator-code/components/generator/index.vue';
 
 const router = useRouter();
 const route = useRoute();
 const tableStore = useTableStore();
+const vmsStore = useVmsStore();
+const { formValue, formOption } = storeToRefs(vmsStore);
 
 // 数据库表信息
 const tableInfo = reactive({
@@ -28,6 +32,9 @@ const getTableData = async () => {
   const tableName: any = route.query.tableName;
   const tableMetaData = await tableStore.getTableMetaData(tableName);
   Object.assign(tableInfo, tableMetaData);
+
+  // 设置 生成表单注释值
+  formValue.value.comment = tableInfo.comment;
 };
 
 onMounted(() => {
